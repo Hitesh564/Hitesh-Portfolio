@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import App from "../app/App";
+import SiteAnalytics from "../app/SiteAnalytics";
+import "../styles/index.css";
+import profilePictureUrl from "../assets/profilePicture.webp?url";
+
+export function getStaticPaths() {
+  return [
+    { params: { section: "about" } },
+    { params: { section: "impact" } },
+    { params: { section: "stack" } },
+    { params: { section: "experience" } },
+    { params: { section: "recommendations" } },
+    { params: { section: "featured" } },
+    { params: { section: "projects" } },
+    { params: { section: "contact" } },
+  ];
+}
+
+const { section } = Astro.params;
+const canonical = `https://github.com/Hitesh564/${section}`;
+
+const titles: Record<string, string> = {
+  about:           "About - Hitesh Jindal | AI & ML Engineer",
+  impact:          "Impact - Hitesh Jindal | AI & ML Engineer",
+  stack:           "Stack - Hitesh Jindal | AI & ML Engineer",
+  experience:      "Experience - Hitesh Jindal | AI & ML Engineer",
+  recommendations: "Recommendations - Hitesh Jindal | AI & ML Engineer",
+  featured:        "Featured Work - Hitesh Jindal | AI & ML Engineer",
+  projects:        "Projects & Research - Hitesh Jindal | AI & ML Engineer",
+  contact:         "Contact - Hitesh Jindal | AI & ML Engineer",
+};
+---
+
+<BaseLayout
+  title={titles[section] ?? "Hitesh Jindal - AI & ML Engineer"}
+  description="B.Tech CSAI @ Plaksha University. AgentEval failure attribution SDK, Veriq AI interview platform, Explainable RETFound retinal AI, and Gradient Coherence Optimizer."
+  canonical={canonical}
+>
+  <link slot="head" rel="preload" as="image" href={profilePictureUrl} fetchpriority="high" type="image/webp" />
+  <App client:idle />
+  <SiteAnalytics client:idle />
+</BaseLayout>

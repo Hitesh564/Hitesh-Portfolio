@@ -1,0 +1,78 @@
+---
+import { ClientRouter } from "astro:transitions";
+import { PageBackground } from "../app/components/PageBackground";
+import { ClockWidget } from "../app/components/ClockWidget";
+import { BottomRightHUD } from "../app/components/BottomRightHUD";
+import "@fontsource/playfair-display/800.css";
+import "@fontsource/playfair-display/400-italic.css";
+import "@fontsource/dm-sans/400.css";
+import "@fontsource/dm-sans/500.css";
+import "@fontsource/dm-sans/600.css";
+import "@fontsource/dm-mono/400.css";
+import dmSans400Url from "@fontsource/dm-sans/files/dm-sans-latin-400-normal.woff2?url";
+import playfair800Url from "@fontsource/playfair-display/files/playfair-display-latin-800-normal.woff2?url";
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  jsonLd?: object[];
+}
+
+const {
+  title = "Hitesh Jindal - AI & ML Engineer",
+  description = "B.Tech CSAI @ Plaksha University (8.46 CGPA). AgentEval (100% failure attribution SDK), Veriq AI interview platform, and Explainable RETFound retinal AI.",
+  canonical = "https://github.com/Hitesh564",
+  image = "/og-image.jpg",
+  jsonLd = [],
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="canonical" href={canonical} />
+    <link rel="preload" href={dmSans400Url} as="font" type="font/woff2" crossorigin="anonymous" />
+    <link rel="preload" href={playfair800Url} as="font" type="font/woff2" crossorigin="anonymous" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Hitesh Jindal" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1728" />
+    <meta property="og:image:height" content="910" />
+    <meta property="og:image:alt" content="Hitesh Jindal - AI & ML Engineer. Multi-agent evaluation, explainable foundation models, optimization." />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    {jsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    <ClientRouter />
+    <slot name="head" />
+  </head>
+  <body>
+    <PageBackground client:idle transition:persist="site-bg" />
+    <ClockWidget client:idle transition:persist="clock-widget" />
+    <BottomRightHUD client:idle transition:persist="bottom-right-hud" />
+    <div transition:persist="bottom-fade" style="position:fixed;bottom:0;left:0;right:0;height:5.5rem;background:linear-gradient(to top,rgba(6,6,8,0.72) 0%,transparent 100%);pointer-events:none;z-index:48;" />
+    <slot />
+    <script is:inline src="/vendor/mermaid.min.js"></script>
+  </body>
+</html>

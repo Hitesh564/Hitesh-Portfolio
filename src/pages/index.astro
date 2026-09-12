@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import App from "../app/App";
+import SiteAnalytics from "../app/SiteAnalytics";
+import "../styles/index.css";
+import profilePictureUrl from "../assets/profilePicture.webp?url";
+
+const canonical = "https://github.com/Hitesh564";
+
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Hitesh Jindal",
+  "url": "https://github.com/Hitesh564",
+  "jobTitle": "AI & ML Engineer",
+  "worksFor": { "@type": "Organization", "name": "Plaksha University" },
+  "alumniOf": [
+    { "@type": "EducationalOrganization", "name": "Plaksha University" },
+    { "@type": "EducationalOrganization", "name": "DRV DAV Centenary Public School, Phillaur" }
+  ],
+  "knowsAbout": [
+    "LangGraph & LangChain",
+    "LLM Agent Evaluation",
+    "AgentEval SDK",
+    "Veriq AI Interview Platform",
+    "Retrieval-Augmented Generation (RAG)",
+    "PyTorch & Transformers",
+    "RETFound Vision Transformers",
+    "Frangi Filtering & SHAP Explainability",
+    "FastAPI & PostgreSQL",
+    "Qdrant Vector DB"
+  ],
+  "sameAs": [
+    "https://github.com/Hitesh564",
+    "https://www.linkedin.com/in/hitesh-jindal56/"
+  ],
+  "email": "Hitesh.jindal.ug24@plaksha.edu.in",
+  "description": "AI & ML Engineer working on LLM agent evaluation SDKs (AgentEval), AI interview platforms (Veriq), and explainable retinal foundation models (RETFound).",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Mohali",
+    "addressCountry": "IN"
+  }
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Hitesh Jindal - AI & ML Engineer",
+  "url": "https://github.com/Hitesh564",
+  "author": { "@type": "Person", "name": "Hitesh Jindal" }
+};
+---
+
+<BaseLayout
+  title="Hitesh Jindal - AI & ML Engineer"
+  description="B.Tech CSAI @ Plaksha University (8.46 CGPA). AgentEval (100% failure attribution SDK), Veriq AI interview platform, and Explainable RETFound retinal AI."
+  canonical={canonical}
+  jsonLd={[personSchema, websiteSchema]}
+>
+  <link slot="head" rel="preload" as="image" href={profilePictureUrl} fetchpriority="high" type="image/webp" />
+  <App client:load />
+  <SiteAnalytics client:idle />
+</BaseLayout>
